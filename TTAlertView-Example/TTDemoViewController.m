@@ -18,15 +18,6 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 
 @implementation TTDemoViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,13 +33,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     UIButton *demoSimple = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoSimple setTitle:@"Simple" forState:UIControlStateNormal];
     [demoSimple addTarget:self action:@selector(demoSimpleAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoSimple setFrame:(CGRect){ xSpacing,y,buttonWidth,buttonHeight }];
+    [demoSimple setFrame:(CGRect){ xSpacing, y, buttonWidth, buttonHeight }];
     [scrollView addSubview:demoSimple];
     
     UIButton *demoSimpleCustom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoSimpleCustom setTitle:@"Simple Custom" forState:UIControlStateNormal];
     [demoSimpleCustom addTarget:self action:@selector(demoSimpleCustomAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoSimpleCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth,y,buttonWidth,buttonHeight }];
+    [demoSimpleCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth, y, buttonWidth, buttonHeight }];
     [[demoSimpleCustom titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [scrollView addSubview:demoSimpleCustom];
     
@@ -57,13 +48,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     UIButton *demoMediumText = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoMediumText setTitle:@"Medium Text" forState:UIControlStateNormal];
     [demoMediumText addTarget:self action:@selector(demoMediumTextAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoMediumText setFrame:(CGRect){ xSpacing,y,buttonWidth,buttonHeight }];
+    [demoMediumText setFrame:(CGRect){ xSpacing, y, buttonWidth, buttonHeight }];
     [scrollView addSubview:demoMediumText];
     
     UIButton *demoMediumTextCustom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoMediumTextCustom setTitle:@"Medium Text Custom" forState:UIControlStateNormal];
     [demoMediumTextCustom addTarget:self action:@selector(demoMediumTextCustomAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoMediumTextCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth,y,buttonWidth,buttonHeight }];
+    [demoMediumTextCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth, y, buttonWidth, buttonHeight }];
     [[demoMediumTextCustom titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [scrollView addSubview:demoMediumTextCustom];
     
@@ -72,13 +63,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     UIButton *demoLongText = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoLongText setTitle:@"Long Text" forState:UIControlStateNormal];
     [demoLongText addTarget:self action:@selector(demoLongTextAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoLongText setFrame:(CGRect){ xSpacing,y,buttonWidth,buttonHeight }];
+    [demoLongText setFrame:(CGRect){ xSpacing, y, buttonWidth, buttonHeight }];
     [scrollView addSubview:demoLongText];
     
     UIButton *demoLongTextCustom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoLongTextCustom setTitle:@"Long Text Custom" forState:UIControlStateNormal];
     [demoLongTextCustom addTarget:self action:@selector(demoLongTextCustomAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoLongTextCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth,y,buttonWidth,buttonHeight }];
+    [demoLongTextCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth, y, buttonWidth, buttonHeight }];
     [[demoLongTextCustom titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [scrollView addSubview:demoLongTextCustom];
     
@@ -87,13 +78,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     UIButton *demoThreeButtonsText = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoThreeButtonsText setTitle:@"Three Buttons" forState:UIControlStateNormal];
     [demoThreeButtonsText addTarget:self action:@selector(demoThreeButtonsAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoThreeButtonsText setFrame:(CGRect){ xSpacing,y,buttonWidth,buttonHeight }];
+    [demoThreeButtonsText setFrame:(CGRect){ xSpacing, y, buttonWidth, buttonHeight }];
     [scrollView addSubview:demoThreeButtonsText];
     
     UIButton *demoThreeButtonsCustom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoThreeButtonsCustom setTitle:@"Three Buttons Custom" forState:UIControlStateNormal];
     [demoThreeButtonsCustom addTarget:self action:@selector(demoThreeButtonsCustomAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoThreeButtonsCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth,y,buttonWidth,buttonHeight }];
+    [demoThreeButtonsCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth, y, buttonWidth, buttonHeight }];
     [[demoThreeButtonsCustom titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [scrollView addSubview:demoThreeButtonsCustom];
     
@@ -102,13 +93,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     UIButton *demoFourButtonsText = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoFourButtonsText setTitle:@"Four Buttons" forState:UIControlStateNormal];
     [demoFourButtonsText addTarget:self action:@selector(demoFourButtonsAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoFourButtonsText setFrame:(CGRect){ xSpacing,y,buttonWidth,buttonHeight }];
+    [demoFourButtonsText setFrame:(CGRect){ xSpacing, y, buttonWidth, buttonHeight }];
     [scrollView addSubview:demoFourButtonsText];
     
     UIButton *demoFourButtonsCustom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoFourButtonsCustom setTitle:@"Four Buttons Custom" forState:UIControlStateNormal];
     [demoFourButtonsCustom addTarget:self action:@selector(demoFourButtonsCustomAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoFourButtonsCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth,y,buttonWidth,buttonHeight }];
+    [demoFourButtonsCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth, y, buttonWidth, buttonHeight }];
     [[demoFourButtonsCustom titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [scrollView addSubview:demoFourButtonsCustom];
     
@@ -117,13 +108,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     UIButton *demoFiveButtonsText = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoFiveButtonsText setTitle:@"Five Buttons" forState:UIControlStateNormal];
     [demoFiveButtonsText addTarget:self action:@selector(demoFiveButtonsAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoFiveButtonsText setFrame:(CGRect){ xSpacing,y,buttonWidth,buttonHeight }];
+    [demoFiveButtonsText setFrame:(CGRect){ xSpacing, y, buttonWidth, buttonHeight }];
     [scrollView addSubview:demoFiveButtonsText];
     
     UIButton *demoFiveButtonsCustom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoFiveButtonsCustom setTitle:@"Five Buttons Custom" forState:UIControlStateNormal];
     [demoFiveButtonsCustom addTarget:self action:@selector(demoFiveButtonsCustomAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoFiveButtonsCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth,y,buttonWidth,buttonHeight }];
+    [demoFiveButtonsCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth, y, buttonWidth, buttonHeight }];
     [[demoFiveButtonsCustom titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [scrollView addSubview:demoFiveButtonsCustom];
     
@@ -132,33 +123,27 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     UIButton *demoLongTextFourButtonsTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoLongTextFourButtonsTest setTitle:@"Long Text, 4 buttons" forState:UIControlStateNormal];
     [demoLongTextFourButtonsTest addTarget:self action:@selector(demoLongTextFourButtonsAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoLongTextFourButtonsTest setFrame:(CGRect){ xSpacing,y,buttonWidth,buttonHeight }];
+    [demoLongTextFourButtonsTest setFrame:(CGRect){ xSpacing, y, buttonWidth, buttonHeight }];
     [scrollView addSubview:demoLongTextFourButtonsTest];
     
     UIButton *demoLongTextFourButtonsTestCustom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [demoLongTextFourButtonsTestCustom setTitle:@"Long Text, 4 buttons Custom" forState:UIControlStateNormal];
     [demoLongTextFourButtonsTestCustom addTarget:self action:@selector(demoLongTextFourButtonsCustomAction:) forControlEvents:UIControlEventTouchUpInside];
-    [demoLongTextFourButtonsTestCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth,y,buttonWidth,buttonHeight }];
+    [demoLongTextFourButtonsTestCustom setFrame:(CGRect){ 2*xSpacing + buttonWidth, y, buttonWidth, buttonHeight }];
     [[demoLongTextFourButtonsTestCustom titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [scrollView addSubview:demoLongTextFourButtonsTestCustom];
     
     y += ySpacing + buttonHeight;
     
-    [scrollView setContentSize:(CGSize){self.view.bounds.size.width,y}];
+    [scrollView setContentSize:(CGSize){self.view.bounds.size.width, y}];
     [self.view addSubview:scrollView];
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)styleCustomAlertView:(TTAlertView *)alertView
 {
-    [alertView.dialogContainerView setImage:[[UIImage imageNamed:@"alert.bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(11.0f, 13.0f, 14.0f, 13.0f)]];
-    [alertView.dialogContainerView setBackgroundColor:[UIColor clearColor]];
+    [alertView.containerView setImage:[[UIImage imageNamed:@"alert.bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(11.0f, 13.0f, 14.0f, 13.0f)]];
+    [alertView.containerView setBackgroundColor:[UIColor clearColor]];
     
     UIImage *greenButtonImageOff = [[UIImage imageNamed:@"large.button.green.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
     UIImage *greenButtonImageOn = [[UIImage imageNamed:@"large.button.green.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
@@ -231,13 +216,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 // four buttons demo
 - (void)demoFourButtonsAction:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Four Buttons" message:@"Four Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three",@"Four", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Four Buttons" message:@"Four Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", nil];
     [alertView show];
 }
 
 - (void)demoFourButtonsCustomAction:(id)sender
 {
-    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Four Buttons" message:@"Four Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three",@"Four", nil];
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Four Buttons" message:@"Four Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", nil];
     [self styleCustomAlertView:alertView];
     [alertView show];
 }
@@ -245,13 +230,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 // five buttons demo
 - (void)demoFiveButtonsAction:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Five Buttons" message:@"Five Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three",@"Four",@"Five", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Five Buttons" message:@"Five Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", @"Five", nil];
     [alertView show];
 }
 
 - (void)demoFiveButtonsCustomAction:(id)sender
 {
-    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Five Buttons" message:@"Five Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three",@"Four",@"Five", nil];
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Five Buttons" message:@"Five Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", @"Five", nil];
     [self styleCustomAlertView:alertView];
     [alertView show];
 }
@@ -259,13 +244,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 // long text four buttons demo
 - (void)demoLongTextFourButtonsAction:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Four Buttons Long Text" message:loremIpsum delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three",@"Four", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Four Buttons Long Text" message:loremIpsum delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", nil];
     [alertView show];
 }
 
 - (void)demoLongTextFourButtonsCustomAction:(id)sender
 {
-    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Four Buttons Long Text" message:loremIpsum delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three",@"Four", nil];
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Four Buttons Long Text" message:loremIpsum delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", nil];
     [self styleCustomAlertView:alertView];
     [alertView show];
 }

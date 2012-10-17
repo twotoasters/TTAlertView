@@ -23,10 +23,17 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
 
 @interface TTAlertView ()
 
+@property (nonatomic, readonly) UIScrollView *messageScrollView; // used if the message excedes the maximum allowed size of the alert dialog
+
 @property (nonatomic, copy) NSString *cancelButtonTitle;
 @property (nonatomic, strong) NSArray *otherButtonTitles;
 @property (nonatomic, strong) NSMutableArray *buttons;
 @property (nonatomic, strong) NSMutableDictionary *buttonSizeStrings;
+
+/**
+ * Called when the alertview needs layout for a window
+ */
+- (void)layoutInWindow:(UIWindow *)window;
 
 @end
 
@@ -126,7 +133,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
                              [self.delegate didPresentAlertView:self];
                          }
                      }];
-    [self.dialogContainerView.layer addAnimation:[self attachPopUpAnimation] forKey:@"popup"];
+    [self.containerView.layer addAnimation:[self attachPopUpAnimation] forKey:@"popup"];
 }
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)index animated:(BOOL)animated
@@ -194,12 +201,12 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
 
 - (void)setBackgroundImage:(UIImage *)image
 {
-    [self.dialogBackgroundView setImage:image];
+    [self.backgroundView setImage:image];
 }
 
 - (void)setAlertContainerImage:(UIImage *)image
 {
-    [self.dialogContainerView setImage:image];
+    [self.containerView setImage:image];
 }
 
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state atIndex:(NSUInteger)index
@@ -231,7 +238,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     [otherButton setBackgroundColor:[UIColor blackColor]];
     [otherButton addTarget:self action:@selector(otherButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [otherButton setTitle:title forState:UIControlStateNormal];
-    [self.dialogContainerView addSubview:otherButton];
+    [self.containerView addSubview:otherButton];
     [self.buttons insertObject:otherButton atIndex:([self.buttons count] - 1) + self.firstOtherButtonIndex];
     
     if(self.isVisible) {
@@ -259,7 +266,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     [cancelButton setBackgroundColor:[UIColor blackColor]];
     [cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [cancelButton setTitle:self.cancelButtonTitle forState:UIControlStateNormal];
-    [self.dialogContainerView addSubview:cancelButton];
+    [self.containerView addSubview:cancelButton];
     [self.buttons insertObject:cancelButton atIndex:_cancelButtonIndex];
     
     [self.otherButtonTitles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -281,7 +288,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
 {
     [self setFrame:window.bounds];
     
-    [self.dialogBackgroundView setFrame:self.bounds];
+    [self.backgroundView setFrame:self.bounds];
     
     // size title label
     CGFloat contentWidth = self.bounds.size.width - 2*kTTDialogLeftInset - 2*kTTDialogContentLeftInset;
@@ -323,7 +330,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     
     // finish sizing content view
     CGFloat dialogHeight = kTTDialogContentTopInset + self.titleLabel.frame.size.height + kTTDialogContentTitleMessageSpacer + self.messageScrollView.frame.size.height + kTTDialogContentMessageButtonSpacer + totalButtonHeight + kTTDialogContentBottomInset;
-    [self.dialogContainerView setFrame:(CGRect){ { kTTDialogLeftInset, MAX(kTTDialogMinVerticalInset, self.frame.size.height/2 - dialogHeight/2) }, { self.bounds.size.width - 2*kTTDialogLeftInset, dialogHeight } }];
+    [self.containerView setFrame:(CGRect){ { kTTDialogLeftInset, MAX(kTTDialogMinVerticalInset, self.frame.size.height/2 - dialogHeight/2) }, { self.bounds.size.width - 2*kTTDialogLeftInset, dialogHeight } }];
     
 }
 
@@ -345,11 +352,11 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     [titleLabel setTextColor:[UIColor blackColor]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [titleLabel setText:self.title];
-    [self.dialogContainerView addSubview:titleLabel];
+    [self.containerView addSubview:titleLabel];
     _titleLabel = titleLabel;
     
     UIScrollView *messageScrollView = [[UIScrollView alloc] init];
-    [self.dialogContainerView addSubview:messageScrollView];
+    [self.containerView addSubview:messageScrollView];
     _messageScrollView = messageScrollView;
     
     UILabel *messageLabel = [[UILabel alloc] init];

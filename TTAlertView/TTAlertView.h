@@ -27,16 +27,12 @@
 - (void)addButtonWithTitle:(NSString *)title;
 - (NSString *)buttonTitleAtIndex:(NSInteger)index;
 
-//
-// TTAlertView
-// Properties and methods exposed for customization
-//
+// TTAlertView properties and methods exposed for customization
 
-@property (nonatomic, readonly) UIImageView *dialogBackgroundView; // by default, the darkened background displayed behind the alert
-@property (nonatomic, readonly) UIImageView *dialogContainerView; // the background of the alert view
+@property (nonatomic, readonly) UIImageView *backgroundView; // by default, the darkened background displayed behind the alert
+@property (nonatomic, readonly) UIImageView *containerView; // the background of the alert view
 @property (nonatomic, readonly) UILabel *titleLabel;
 @property (nonatomic, readonly) UILabel *messageLabel;
-@property (nonatomic, readonly) UIScrollView *messageScrollView; // used if the message excedes the maximum allowed size of the alert dialog
 
 /**
  * Set the background image for the button at a given index 
@@ -49,11 +45,6 @@
  * This is intended to be used for button images which have the text baked in, or for buttons with non-repeatable textures. It can also be used to force particular buttons to layout with a different size
  */
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index;
-
-/**
- * Called when the alertview needs layout for a window
- */
-- (void)layoutInWindow:(UIWindow *)window;
 
 @end
 
