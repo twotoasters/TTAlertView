@@ -145,12 +145,22 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     [alertView.containerView setImage:[[UIImage imageNamed:@"alert.bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(11.0f, 13.0f, 14.0f, 13.0f)]];
     [alertView.containerView setBackgroundColor:[UIColor clearColor]];
     
+    alertView.buttonInsets = UIEdgeInsetsMake(alertView.buttonInsets.top, alertView.buttonInsets.left + 4.0f, alertView.buttonInsets.bottom + 6.0f, alertView.buttonInsets.right + 4.0f);
+    
+    UIImage *redButtonImageOff = [[UIImage imageNamed:@"large.button.red.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *redButtonImageOn = [[UIImage imageNamed:@"large.button.red.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+
     UIImage *greenButtonImageOff = [[UIImage imageNamed:@"large.button.green.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
     UIImage *greenButtonImageOn = [[UIImage imageNamed:@"large.button.green.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
     
     for(int i = 0; i < [alertView numberOfButtons]; i++) {
-        [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal atIndex:i];
-        [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted atIndex:i];
+        if (i == 0) {
+            [alertView setButtonBackgroundImage:redButtonImageOff forState:UIControlStateNormal atIndex:i];
+            [alertView setButtonBackgroundImage:redButtonImageOn forState:UIControlStateHighlighted atIndex:i];
+        } else {
+            [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal atIndex:i];
+            [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted atIndex:i];
+        }
     }
     
 }
@@ -160,13 +170,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 // simple demo
 - (void)demoSimpleAction:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Simple" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Test", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Simple" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
     [alertView show];
 }
 
 - (void)demoSimpleCustomAction:(id)sender
 {
-    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Simple" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Test", nil];
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Simple" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
     [self styleCustomAlertView:alertView];
     [alertView show];
 }
