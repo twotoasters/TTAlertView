@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^TTAlertViewCompletionHandler)(NSUInteger index);
+
 @protocol TTAlertViewDelegate;
 
 @interface TTAlertView : UIView
@@ -24,6 +26,9 @@
 @property (nonatomic, readonly) NSInteger numberOfButtons;
 
 #pragma mark - TTAlertView properties
+
+@property (nonatomic, copy) TTAlertViewCompletionHandler cancelButtonCompletionHandler;
+@property (nonatomic, copy) TTAlertViewCompletionHandler otherButtonsCompletionHandler;
 
 @property (nonatomic, readonly) UIImageView *backgroundView; // by default, the darkened background displayed behind the alert
 @property (nonatomic, readonly) UIImageView *containerView; // the background of the alert view
