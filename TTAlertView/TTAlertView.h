@@ -11,8 +11,10 @@
 @protocol TTAlertViewDelegate;
 
 @interface TTAlertView : UIView
+{}
 
-// normal UIAlertView methods
+#pragma mark - UIAlertView properties
+
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *message;
 @property (nonatomic, weak) id<TTAlertViewDelegate> delegate;
@@ -21,13 +23,7 @@
 @property (nonatomic, readonly) NSInteger firstOtherButtonIndex;
 @property (nonatomic, readonly) NSInteger numberOfButtons;
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
-- (void)show;
-- (void)dismissWithClickedButtonIndex:(NSInteger)index animated:(BOOL)animated;
-- (void)addButtonWithTitle:(NSString *)title;
-- (NSString *)buttonTitleAtIndex:(NSInteger)index;
-
-// TTAlertView properties and methods exposed for customization
+#pragma mark - TTAlertView properties
 
 @property (nonatomic, readonly) UIImageView *backgroundView; // by default, the darkened background displayed behind the alert
 @property (nonatomic, readonly) UIImageView *containerView; // the background of the alert view
@@ -53,20 +49,36 @@
 @property (nonatomic, assign) CGFloat buttonVerticalSpacer; // the vertical distance between the buttons in the #buttons > 2 vertical layout
 @property (nonatomic, assign) CGFloat buttonHorizontalSpacer; // the horizontal space between buttons
 
+#pragma mark - UIAlertView methods
+
+- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
+- (void)show;
+- (void)dismissWithClickedButtonIndex:(NSInteger)index animated:(BOOL)animated;
+- (void)addButtonWithTitle:(NSString *)title;
+- (NSString *)buttonTitleAtIndex:(NSInteger)index;
+
+#pragma mark - TTAlertView methods
 
 /**
- * Set the background image for the button at a given index 
- * This is intended to be used with the button title text and a resizable image
+ * Set the background image for the button at a given index.
+ * This is intended to be used with the button title text and a resizable image.
  */
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state atIndex:(NSUInteger)index;
 
 /**
+ *
+ */
+- (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index;
+
+/**
  * Set the button image for the button at a given index, with a given size
- * This is intended to be used for button images which have the text baked in, or for buttons with non-repeatable textures. It can also be used to force particular buttons to layout with a different size
+ * This is intended to be used for button images which have the text baked in, or for buttons with non-repeatable textures. It can also be used to force particular buttons to layout with a different size. It is the responsibility of the developer to not specify button sizes larger than the alert view can display
  */
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index;
 
 @end
+
+#pragma mark - 
 
 /**
  * TTAlertViewDelegate 
