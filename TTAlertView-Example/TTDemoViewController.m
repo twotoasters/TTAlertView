@@ -135,6 +135,53 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     
     y += ySpacing + buttonHeight;
     
+    // test cases with no UIAlertView analog
+    
+    UIButton *demoOneButtonSizedTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [demoOneButtonSizedTest setTitle:@"One Button Custom Size" forState:UIControlStateNormal];
+    [demoOneButtonSizedTest addTarget:self action:@selector(demoOneButtonSizedAction:) forControlEvents:UIControlEventTouchUpInside];
+    [demoOneButtonSizedTest setFrame:(CGRect){ buttonWidth, y, buttonWidth, buttonHeight }];
+    [[demoOneButtonSizedTest titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    [scrollView addSubview:demoOneButtonSizedTest];
+    
+    y += ySpacing + buttonHeight;
+    
+    UIButton *demoTwoButtonsOneSizedTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [demoTwoButtonsOneSizedTest setTitle:@"Two Buttons, one sized" forState:UIControlStateNormal];
+    [demoTwoButtonsOneSizedTest addTarget:self action:@selector(demoTwoButtonsOneSizedAction:) forControlEvents:UIControlEventTouchUpInside];
+    [demoTwoButtonsOneSizedTest setFrame:(CGRect){ buttonWidth, y, buttonWidth, buttonHeight }];
+    [[demoTwoButtonsOneSizedTest titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    [scrollView addSubview:demoTwoButtonsOneSizedTest];
+    
+    y += ySpacing + buttonHeight;
+    
+    UIButton *demoTwoButtonsOtherSizedTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [demoTwoButtonsOtherSizedTest setTitle:@"Two Buttons, other sized" forState:UIControlStateNormal];
+    [demoTwoButtonsOtherSizedTest addTarget:self action:@selector(demoTwoButtonsOtherSizedAction:) forControlEvents:UIControlEventTouchUpInside];
+    [demoTwoButtonsOtherSizedTest setFrame:(CGRect){ buttonWidth, y, buttonWidth, buttonHeight }];
+    [[demoTwoButtonsOtherSizedTest titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    [scrollView addSubview:demoTwoButtonsOtherSizedTest];
+    
+    y += ySpacing + buttonHeight;
+    
+    UIButton *demoTwoButtonsBothSizedTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [demoTwoButtonsBothSizedTest setTitle:@"Two Buttons, both sized" forState:UIControlStateNormal];
+    [demoTwoButtonsBothSizedTest addTarget:self action:@selector(demoTwoButtonsBothSizedAction:) forControlEvents:UIControlEventTouchUpInside];
+    [demoTwoButtonsBothSizedTest setFrame:(CGRect){ buttonWidth, y, buttonWidth, buttonHeight }];
+    [[demoTwoButtonsBothSizedTest titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    [scrollView addSubview:demoTwoButtonsBothSizedTest];
+    
+    y += ySpacing + buttonHeight;
+    
+    UIButton *demoThreeButtonsCustomSizedTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [demoThreeButtonsCustomSizedTest setTitle:@"Three Buttons, custom sized" forState:UIControlStateNormal];
+    [demoThreeButtonsCustomSizedTest addTarget:self action:@selector(demoThreeButtonsCustomSizedAction:) forControlEvents:UIControlEventTouchUpInside];
+    [demoThreeButtonsCustomSizedTest setFrame:(CGRect){ buttonWidth, y, buttonWidth, buttonHeight }];
+    [[demoThreeButtonsCustomSizedTest titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    [scrollView addSubview:demoThreeButtonsCustomSizedTest];
+    
+    y += ySpacing + buttonHeight;
+    
     [scrollView setContentSize:(CGSize){self.view.bounds.size.width, y}];
     [self.view addSubview:scrollView];
     
@@ -146,10 +193,13 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     [alertView.containerView setBackgroundColor:[UIColor clearColor]];
     
     alertView.buttonInsets = UIEdgeInsetsMake(alertView.buttonInsets.top, alertView.buttonInsets.left + 4.0f, alertView.buttonInsets.bottom + 6.0f, alertView.buttonInsets.right + 4.0f);
-    
+}
+
+- (void)addButtonsWithBackgroundImagesToAlertView:(TTAlertView *)alertView
+{
     UIImage *redButtonImageOff = [[UIImage imageNamed:@"large.button.red.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
     UIImage *redButtonImageOn = [[UIImage imageNamed:@"large.button.red.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
-
+    
     UIImage *greenButtonImageOff = [[UIImage imageNamed:@"large.button.green.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
     UIImage *greenButtonImageOn = [[UIImage imageNamed:@"large.button.green.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
     
@@ -162,7 +212,6 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
             [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted atIndex:i];
         }
     }
-    
 }
 
 #pragma mark - Demo cases
@@ -178,6 +227,7 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 {
     TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Simple" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
     [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];
     [alertView show];
 }
 
@@ -192,6 +242,7 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 {
     TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Medium Text" message:mediumText delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Test", nil];
     [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];    
     [alertView show];
 }
 
@@ -206,6 +257,7 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 {
     TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Long Text" message:loremIpsum delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Test", nil];
     [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];
     [alertView show];
 }
 
@@ -220,6 +272,7 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 {
     TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Three Buttons" message:@"Three Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", nil];
     [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];
     [alertView show];
 }
 
@@ -234,6 +287,7 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 {
     TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Four Buttons" message:@"Four Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", nil];
     [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];
     [alertView show];
 }
 
@@ -248,6 +302,7 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 {
     TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Five Buttons" message:@"Five Buttons" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", @"Five", nil];
     [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];
     [alertView show];
 }
 
@@ -262,6 +317,104 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
 {
     TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Four Buttons Long Text" message:loremIpsum delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", @"Four", nil];
     [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];
+    [alertView show];
+}
+
+- (void)demoOneButtonSizedAction:(id)sender
+{
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"One Button Custom Size" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+    [self styleCustomAlertView:alertView];
+    
+    UIImage *redButtonImageOff = [[UIImage imageNamed:@"large.button.red.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *redButtonImageOn = [[UIImage imageNamed:@"large.button.red.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    [alertView setButtonBackgroundImage:redButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:0];
+    [alertView setButtonBackgroundImage:redButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:0];
+    
+    [alertView show];
+}
+
+- (void)demoTwoButtonsOneSizedAction:(id)sender
+{
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Two Buttons, One Sized" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Other", nil];
+    [self styleCustomAlertView:alertView];
+    
+    UIImage *redButtonImageOff = [[UIImage imageNamed:@"large.button.red.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *redButtonImageOn = [[UIImage imageNamed:@"large.button.red.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    UIImage *greenButtonImageOff = [[UIImage imageNamed:@"large.button.green.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *greenButtonImageOn = [[UIImage imageNamed:@"large.button.green.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+
+    [alertView setButtonBackgroundImage:redButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:0];
+    [alertView setButtonBackgroundImage:redButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:0];
+    
+    [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal atIndex:1];
+    [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted atIndex:1];
+    
+    [alertView show];
+}
+
+- (void)demoTwoButtonsOtherSizedAction:(id)sender
+{
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Two Buttons, Other Sized" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Other", nil];
+    [self styleCustomAlertView:alertView];
+    
+    UIImage *redButtonImageOff = [[UIImage imageNamed:@"large.button.red.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *redButtonImageOn = [[UIImage imageNamed:@"large.button.red.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    UIImage *greenButtonImageOff = [[UIImage imageNamed:@"large.button.green.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *greenButtonImageOn = [[UIImage imageNamed:@"large.button.green.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    [alertView setButtonBackgroundImage:redButtonImageOff forState:UIControlStateNormal atIndex:0];
+    [alertView setButtonBackgroundImage:redButtonImageOn forState:UIControlStateHighlighted atIndex:0];
+    
+    [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:1];
+    [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:1];
+    
+    [alertView show];
+}
+
+- (void)demoTwoButtonsBothSizedAction:(id)sender
+{
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Two Buttons, Both Sized" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Other", nil];
+    [self styleCustomAlertView:alertView];
+    
+    UIImage *redButtonImageOff = [[UIImage imageNamed:@"large.button.red.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *redButtonImageOn = [[UIImage imageNamed:@"large.button.red.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    UIImage *greenButtonImageOff = [[UIImage imageNamed:@"large.button.green.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *greenButtonImageOn = [[UIImage imageNamed:@"large.button.green.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    [alertView setButtonBackgroundImage:redButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:0];
+    [alertView setButtonBackgroundImage:redButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:0];
+    
+    [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:1];
+    [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:1];
+    
+    [alertView show];
+}
+
+- (void)demoThreeButtonsCustomSizedAction:(id)sender
+{
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Three Buttons, Custom Sized" message:@"Simple" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Two", @"Three", nil];
+    [self styleCustomAlertView:alertView];
+    
+    UIImage *redButtonImageOff = [[UIImage imageNamed:@"large.button.red.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *redButtonImageOn = [[UIImage imageNamed:@"large.button.red.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    UIImage *greenButtonImageOff = [[UIImage imageNamed:@"large.button.green.off.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    UIImage *greenButtonImageOn = [[UIImage imageNamed:@"large.button.green.on.png"] stretchableImageWithLeftCapWidth:2.0 topCapHeight:2.0];
+    
+    [alertView setButtonBackgroundImage:redButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:0];
+    [alertView setButtonBackgroundImage:redButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:0];
+    
+    [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 88) atIndex:1];
+    [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 88) atIndex:1];
+    
+    [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:2];
+    [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:2];
+    
     [alertView show];
 }
 

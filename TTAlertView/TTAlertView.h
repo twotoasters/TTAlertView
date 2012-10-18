@@ -66,6 +66,11 @@
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state atIndex:(NSUInteger)index;
 
 /**
+ *
+ */
+- (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index;
+
+/**
  * Set the button image for the button at a given index, with a given size
  * This is intended to be used for button images which have the text baked in, or for buttons with non-repeatable textures. It can also be used to force particular buttons to layout with a different size. It is the responsibility of the developer to not specify button sizes larger than the alert view can display
  */

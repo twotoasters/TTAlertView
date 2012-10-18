@@ -234,12 +234,26 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     }
 }
 
+- (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
+{
+    self.usingCustomButtonSizes = YES;
+    [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
+    
+    [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundImage:image forState:state];
+    [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundColor:[UIColor clearColor]];
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
 {
     self.usingCustomButtonSizes = YES;
     [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
     
-    [(UIButton *)[self.buttons objectAtIndex:index] setImage:image forState:UIControlStateNormal];
+    [(UIButton *)[self.buttons objectAtIndex:index] setImage:image forState:state];
+    [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundColor:[UIColor clearColor]];
     
     if(self.isVisible) {
         [self setNeedsLayout];
@@ -373,19 +387,6 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     [self.messageScrollView setContentSize:messageTextSize];
     
     // button layout
-    
-    // full button width if only one button, or if vertical layout (>2 buttons). If 2 buttons, divide width. If 2 buttons and custom button sizes, find width of the custom buttons
-    // and size the standard button size to take up the remainder
-//    CGFloat standardButtonWidth = [self.buttons count] == 2 ? (CGFloat)( (totalButtonWidth - self.buttonHorizontalSpacer) / [self.buttons count] ) : totalButtonWidth;
-//    
-//    if(self.usingCustomButtonSizes && [self.buttons count] == 2) {
-//        CGFloat remainderWidth = totalButtonWidth - self.buttonHorizontalSpacer;
-//        for(NSString *sizeString in [self.buttonSizeStrings allValues]) {
-//            remainderWidth -= CGSizeFromString(sizeString).width;
-//        }
-//        standardButtonWidth = remainderWidth;
-//    }
-    
     __block CGFloat lastY = 0.0f;
     __block CGFloat lastX = 0.0f;
     
@@ -444,8 +445,8 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
             UIButton *button = (UIButton *)obj;
             
             CGSize buttonSize = CGSizeMake(totalButtonWidth, kTTDefaultDialogButtonHeight);
-            if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:0]]) {
-                buttonSize = CGSizeFromString([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:0]]);
+            if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:idx]]) {
+                buttonSize = CGSizeFromString([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:idx]]);
             }
             
             CGFloat x = self.buttonInsets.left + (totalButtonWidth/2 - buttonSize.width/2);
