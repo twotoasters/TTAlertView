@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^TTAlertViewCompletionHandler)(NSUInteger index);
+typedef void (^TTAlertViewCompletionHandler)(NSInteger index);
 
 @protocol TTAlertViewDelegate;
 

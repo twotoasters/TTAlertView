@@ -519,7 +519,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)otherButtonAction:(id)sender
 {
-    NSUInteger index = [self.buttons indexOfObject:sender] + self.firstOtherButtonIndex;
+    NSInteger index = [self.buttons indexOfObject:sender];
     if(self.otherButtonsCompletionHandler != nil) {
         self.otherButtonsCompletionHandler(index);
     } else {
