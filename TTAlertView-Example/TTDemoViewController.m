@@ -193,13 +193,6 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     [alertView.containerView setBackgroundColor:[UIColor clearColor]];
     
     alertView.buttonInsets = UIEdgeInsetsMake(alertView.buttonInsets.top, alertView.buttonInsets.left + 4.0f, alertView.buttonInsets.bottom + 6.0f, alertView.buttonInsets.right + 4.0f);
-    
-    [alertView setCancelButtonCompletionHandler:^(NSInteger idx) {
-        NSLog(@"Cancelled, button index: %d", idx);
-    }];
-    [alertView setOtherButtonsCompletionHandler:^(NSInteger idx){
-        NSLog(@"Other button, button index: %d", idx);
-    }];
 }
 
 - (void)addButtonsWithBackgroundImagesToAlertView:(TTAlertView *)alertView
