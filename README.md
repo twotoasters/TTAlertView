@@ -6,8 +6,8 @@ TTAlertView lets you customize the style and presentation of an alert view.
 
 ## Installation
 
-1. clone TTAlertView from https://github.com/twotoasters/TTAlertView.git
-2. Add the "TTAlertView" folder to your xcodeproject
+1. clone TTAlertView
+2. Add the "TTAlertView" folder and its contents to your xcodeproject
 
 ## Usage 
 
