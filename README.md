@@ -11,4 +11,4 @@ TTAlertView lets you customize the style and presentation of an alert view.
 
 ## Usage 
 
-Some demonstrations of typical TTAlertView usage can be viewed on our blog: <toastmo link>
+Some demonstrations of typical TTAlertView usage can be viewed on our blog: [toastmo link]
