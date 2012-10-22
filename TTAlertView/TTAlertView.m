@@ -9,17 +9,26 @@
 #import "TTAlertView.h"
 #import <QuartzCore/QuartzCore.h>
 
-static CGFloat const kTTDialogLeftInset = 20.0f;
-static CGFloat const kTTDialogContentLeftInset = 10.0f; // space from left edge of dialogContainer to the content (i.e. buttons, message)
-static CGFloat const kTTDialogMinVerticalInset = 60.0f;
-static CGFloat const kTTDialogContentTopInset = 14.0f;
-static CGFloat const kTTDialogContentBottomInset = 8.0f;
-static CGFloat const kTTDialogContentTitleMessageSpacer = 8.0f;
-static CGFloat const kTTDialogContentMessageButtonSpacer = 14.0f;
-static CGFloat const kTTDialogContentExtraButtonsVerticalSpacer = 10.0f;
-static CGFloat const kTTDialogContentBetweenButtonsVerticalSpacer = 4.0f;
-static CGFloat const kTTDialogContentButtonSpacer = 8.0f;
-static CGFloat const kTTDialogContentButtonHeight = 42.0f;
+static CGFloat const kTTDefaultDialogLeftInset = 20.0f;
+static CGFloat const kTTDefaultDialogRightInset = 20.0f;
+static CGFloat const kTTDefaultDialogMinVerticalInset = 60.0f;
+
+static CGFloat const kTTDefaultDialogContentTopInset = 14.0f;
+static CGFloat const kTTDefaultDialogContentBottomInset = 4.0f;
+static CGFloat const kTTDefaultDialogContentLeftInset = 10.0f;
+static CGFloat const kTTDefaultDialogContentRightInset = 10.0f;
+
+static CGFloat const kTTDefaultDialogContentTitleMessageSpacer = 8.0f; // space between the title label and the message label in the default layout
+
+static CGFloat const kTTDefaultDialogButtonTopInset = 4.0f;
+static CGFloat const kTTDefaultDialogButtonBottomInset = 8.0f;
+static CGFloat const kTTDefaultDialogButtonLeftInset = 10.0f;
+static CGFloat const kTTDefaultDialogButtonRightInset = 10.0f;
+
+static CGFloat const kTTDefaultDialogButtonVerticalFirstSpacer = 10.0f; // the vertical distance between the first and second button in the #buttons > 2 vertical layout
+static CGFloat const kTTDefaultDialogButtonVerticalSpacer = 4.0f; // the vertical distance between the buttons in the #buttons > 2 vertical layout
+static CGFloat const kTTDefaultDialogButtonHorizontalSpacer = 8.0f; // the horizontal space between buttons
+static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 @interface TTAlertView ()
 
@@ -29,6 +38,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
 @property (nonatomic, strong) NSArray *otherButtonTitles;
 @property (nonatomic, strong) NSMutableArray *buttons;
 @property (nonatomic, strong) NSMutableDictionary *buttonSizeStrings;
+@property (nonatomic, assign) BOOL usingCustomButtonSizes;
 
 /**
  * Called when the alertview needs layout for a window
@@ -64,10 +74,12 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
         }
         self.otherButtonTitles = otherTitlesArray;
         
+        self.usingCustomButtonSizes = NO;
         self.buttonSizeStrings = [NSMutableDictionary dictionary];
         _visible = NO;
         [self setUserInteractionEnabled:YES];
         
+        [self setupDefaultInsets];
         [self setupView];
         
     }
@@ -76,8 +88,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
 
 #pragma mark - Show/Dismiss
 
-#warning TODO generalize
-- (CAKeyframeAnimation *)attachPopUpAnimation
+- (CAKeyframeAnimation *)popUpAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation
                                       animationWithKeyPath:@"transform"];
@@ -133,7 +144,7 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
                              [self.delegate didPresentAlertView:self];
                          }
                      }];
-    [self.containerView.layer addAnimation:[self attachPopUpAnimation] forKey:@"popup"];
+    [self.containerView.layer addAnimation:[self popUpAnimation] forKey:@"popup"];
 }
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)index animated:(BOOL)animated
@@ -216,14 +227,33 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     
     if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:index]]) {
         [self.buttonSizeStrings removeObjectForKey:[NSNumber numberWithInteger:index]];
+        
+        if ([self.buttonSizeStrings count] == 0) {
+            self.usingCustomButtonSizes = NO;
+        }
+    }
+}
+
+- (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
+{
+    self.usingCustomButtonSizes = YES;
+    [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
+    
+    [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundImage:image forState:state];
+    [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundColor:[UIColor clearColor]];
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
     }
 }
 
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
 {
+    self.usingCustomButtonSizes = YES;
     [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
     
-    [(UIButton *)[self.buttons objectAtIndex:index] setImage:image forState:UIControlStateNormal];
+    [(UIButton *)[self.buttons objectAtIndex:index] setImage:image forState:state];
+    [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundColor:[UIColor clearColor]];
     
     if(self.isVisible) {
         [self setNeedsLayout];
@@ -284,6 +314,21 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     [self layoutInWindow:window];
 }
 
+- (void)setupDefaultInsets
+{
+    self.contentInsets = UIEdgeInsetsMake(kTTDefaultDialogContentTopInset, kTTDefaultDialogContentLeftInset, kTTDefaultDialogContentBottomInset, kTTDefaultDialogContentRightInset);
+    self.buttonInsets = UIEdgeInsetsMake(kTTDefaultDialogButtonTopInset, kTTDefaultDialogButtonLeftInset, kTTDefaultDialogButtonBottomInset, kTTDefaultDialogButtonRightInset);
+    
+    self.containerLeftInset = kTTDefaultDialogLeftInset;
+    self.containerRightInset = kTTDefaultDialogRightInset;
+    self.containerMinVerticalInset = kTTDefaultDialogMinVerticalInset;
+    
+    self.contentTitleMessageSpacer = kTTDefaultDialogContentTitleMessageSpacer;
+    self.buttonVerticalSpacerFirst = kTTDefaultDialogButtonVerticalFirstSpacer;
+    self.buttonVerticalSpacer = kTTDefaultDialogButtonVerticalSpacer;
+    self.buttonHorizontalSpacer = kTTDefaultDialogButtonHorizontalSpacer;
+}
+
 - (void)layoutInWindow:(UIWindow *)window
 {
     [self setFrame:window.bounds];
@@ -291,46 +336,131 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     [self.backgroundView setFrame:self.bounds];
     
     // size title label
-    CGFloat contentWidth = self.bounds.size.width - 2*kTTDialogLeftInset - 2*kTTDialogContentLeftInset;
+    CGFloat contentWidth = self.bounds.size.width - self.contentInsets.left - self.contentInsets.right - self.containerLeftInset - self.containerRightInset;
     CGSize titleTextSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font forWidth:contentWidth lineBreakMode:self.titleLabel.lineBreakMode];
 
-    [self.titleLabel setFrame:(CGRect){ { kTTDialogContentLeftInset, kTTDialogContentTopInset}, { contentWidth, titleTextSize.height } }];
+    [self.titleLabel setFrame:(CGRect){ { self.contentInsets.left, self.contentInsets.top}, { contentWidth, titleTextSize.height } }];
     
     // buttons (layed out from bottom up)
     CGFloat totalButtonHeight = 0.0f; // space from the top of the topmost button to the bottom of the bottom most button. Does not include message-button spacer or contentBottomInset
-    CGFloat buttonWidth = 0.0f;
-    if ([self.buttons count] > 2) {
-        buttonWidth = contentWidth;
-        totalButtonHeight = (kTTDialogContentButtonHeight * [self.buttons count]) + kTTDialogContentExtraButtonsVerticalSpacer + ([self.buttons count] - 2)*(kTTDialogContentBetweenButtonsVerticalSpacer);
-    } else if ([self.buttons count] == 2) {
-        buttonWidth = (CGFloat)( (contentWidth - kTTDialogContentButtonSpacer*MAX(0, [self.buttons count]-1)) / [self.buttons count] );
-        totalButtonHeight = kTTDialogContentButtonHeight;
+    CGFloat totalButtonWidth = self.bounds.size.width - self.containerLeftInset - self.containerRightInset - self.buttonInsets.left - self.buttonInsets.right;
+    
+    if (self.usingCustomButtonSizes) {
+        
+        for(int i = 0; i < [self.buttons count]; i++) {
+            
+            if([self.buttons count] > 2) {
+                // add up button heights
+                CGFloat buttonHeight = kTTDefaultDialogButtonHeight;
+                if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:i]]) {
+                    CGSize buttonSize = CGSizeFromString([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:i]]);
+                    buttonHeight = buttonSize.height;
+                }
+                totalButtonHeight += buttonHeight;
+                totalButtonHeight += (i == 1) ? self.buttonVerticalSpacerFirst : 0;
+                totalButtonHeight += (i >= 2) ? self.buttonVerticalSpacer : 0;
+                
+            } else {
+                // largest button height is total button height
+                CGFloat buttonHeight = kTTDefaultDialogButtonHeight;
+                if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:i]]) {
+                    CGSize buttonSize = CGSizeFromString([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:i]]);
+                    buttonHeight = buttonSize.height;
+                }
+                totalButtonHeight = totalButtonHeight < buttonHeight ? buttonHeight : totalButtonHeight;
+            }
+            
+        };
+        
     } else {
-        buttonWidth = contentWidth;
-        totalButtonHeight = kTTDialogContentButtonHeight;
+        // default height if number of buttons <= 2, else use vertical layout height
+        totalButtonHeight = [self.buttons count] > 2 ? (kTTDefaultDialogButtonHeight * [self.buttons count]) + self.buttonVerticalSpacerFirst + ([self.buttons count] - 2)*(self.buttonVerticalSpacer) : kTTDefaultDialogButtonHeight;
+        
     }
 
-    // max message size is (height of screen) - (min dialog vertical inset) - (content vertical inset) - (title height) - (content title-message spacer) - (content message-button spacer) - (button height) - (content vertical inset) - (min dialog vertical inset)
-    CGFloat maxMessageHeight = self.bounds.size.height - kTTDialogMinVerticalInset - kTTDialogContentTopInset - titleTextSize.height - kTTDialogContentTitleMessageSpacer - kTTDialogContentMessageButtonSpacer - totalButtonHeight - kTTDialogContentBottomInset - kTTDialogMinVerticalInset;
+    // max message size is (height of screen) - (min dialog vertical inset) - (content top inset) - (title height) - (content title-message spacer) - (content bottom inset) - (button top inset) - (button height) - (button bottom inset) - (min dialog vertical inset)
+    CGFloat maxMessageHeight = self.bounds.size.height - self.containerMinVerticalInset - self.contentInsets.top - titleTextSize.height - self.contentTitleMessageSpacer - self.contentInsets.bottom - self.buttonInsets.top - totalButtonHeight - self.buttonInsets.bottom  - self.containerMinVerticalInset;
     CGSize messageTextSize = [self.messageLabel.text sizeWithFont:self.messageLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX) lineBreakMode:self.messageLabel.lineBreakMode];
     
     [self.messageLabel setFrame:(CGRect){ CGPointZero, { contentWidth, messageTextSize.height } }];
-    [self.messageScrollView setFrame:(CGRect){ { kTTDialogContentLeftInset, kTTDialogContentTopInset + self.titleLabel.frame.size.height + kTTDialogContentTitleMessageSpacer }, { contentWidth, MIN( maxMessageHeight, messageTextSize.height ) } }];
+    [self.messageScrollView setFrame:(CGRect){ { self.contentInsets.left, self.contentInsets.top + self.titleLabel.frame.size.height + self.contentTitleMessageSpacer }, { contentWidth, MIN( maxMessageHeight, messageTextSize.height ) } }];
     [self.messageScrollView setContentSize:messageTextSize];
     
-    [self.buttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        UIButton *button = (UIButton *)obj;
+    // button layout
+    __block CGFloat lastY = 0.0f;
+    __block CGFloat lastX = 0.0f;
+    
+    // single button layout case (center horizontaly inside of totalButtonWidth)
+    if ([self.buttons count] == 1) {
         
-        if([self.buttons count] > 2) {
-            [button setFrame:(CGRect){ { kTTDialogContentLeftInset, kTTDialogContentTopInset + self.titleLabel.frame.size.height + kTTDialogContentTitleMessageSpacer + self.messageScrollView.frame.size.height + kTTDialogContentMessageButtonSpacer + totalButtonHeight - ((idx+1)*kTTDialogContentButtonHeight) - (idx > 0 ? kTTDialogContentExtraButtonsVerticalSpacer : 0) - (idx > 1 ? kTTDialogContentBetweenButtonsVerticalSpacer*(idx-1) : 0) }, { buttonWidth, kTTDialogContentButtonHeight } }];
-        } else {
-            [button setFrame:(CGRect){ { kTTDialogContentLeftInset + (idx * (buttonWidth+kTTDialogContentButtonSpacer)), kTTDialogContentTopInset + self.titleLabel.frame.size.height + kTTDialogContentTitleMessageSpacer + self.messageScrollView.frame.size.height + kTTDialogContentMessageButtonSpacer }, { buttonWidth, kTTDialogContentButtonHeight } }];
+        UIButton *button = [self.buttons objectAtIndex:0];
+        CGSize buttonSize = CGSizeMake(totalButtonWidth, totalButtonHeight);
+        if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:0]]) {
+            buttonSize = CGSizeFromString([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:0]]);
         }
-    }];
+        
+        CGFloat x = self.buttonInsets.left + (totalButtonWidth/2 - buttonSize.width/2);
+        CGFloat y = self.contentInsets.top + self.titleLabel.frame.size.height + self.contentTitleMessageSpacer + self.messageScrollView.frame.size.height + self.contentInsets.bottom + self.buttonInsets.top;
+        [button setFrame:(CGRect){ { x, y }, buttonSize }];
+        
+    }
+    // two buttons layout case
+    else if ([self.buttons count] == 2) {
+        
+        // find remaining width after accounting for custom sized widths. Will be used if
+        CGFloat standardButtonWidth = 0.0f;
+        if(self.usingCustomButtonSizes) {
+            CGFloat remainderWidth = totalButtonWidth - self.buttonHorizontalSpacer;
+            for(NSString *sizeString in [self.buttonSizeStrings allValues]) {
+                remainderWidth -= CGSizeFromString(sizeString).width;
+            }
+            standardButtonWidth = remainderWidth;
+        } else {
+            standardButtonWidth = (totalButtonWidth - self.buttonHorizontalSpacer) / 2.0f;
+        }
+        
+        lastX = self.buttonInsets.left;
+        [self.buttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            UIButton *button = (UIButton *)obj;
+            
+            CGSize buttonSize = CGSizeMake( standardButtonWidth, totalButtonHeight );
+            if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:idx]]) {
+                buttonSize = CGSizeFromString([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:idx]]);
+            }
+            
+            CGFloat x = lastX + (idx == 1 ? self.buttonHorizontalSpacer : 0);
+            CGFloat y = self.contentInsets.top + self.titleLabel.frame.size.height + self.contentTitleMessageSpacer + self.messageScrollView.frame.size.height + self.contentInsets.bottom + self.buttonInsets.top + (totalButtonHeight - buttonSize.height);
+            [button setFrame:(CGRect){ { x, y }, buttonSize }];
+            
+            lastX = x + buttonSize.width;
+            lastY = y;
+            
+        }];
+    }
+    // vertical (>2) button layout case. center horizontal, stack vertically
+    else {
+        
+        lastY = self.contentInsets.top + self.titleLabel.frame.size.height + self.contentTitleMessageSpacer + self.messageScrollView.frame.size.height + self.contentInsets.bottom + self.buttonInsets.top + totalButtonHeight;
+        [self.buttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            UIButton *button = (UIButton *)obj;
+            
+            CGSize buttonSize = CGSizeMake(totalButtonWidth, kTTDefaultDialogButtonHeight);
+            if ([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:idx]]) {
+                buttonSize = CGSizeFromString([self.buttonSizeStrings objectForKey:[NSNumber numberWithInteger:idx]]);
+            }
+            
+            CGFloat x = self.buttonInsets.left + (totalButtonWidth/2 - buttonSize.width/2);
+            CGFloat y = lastY - buttonSize.height - (idx == 1 ? self.buttonVerticalSpacerFirst : 0) - (idx > 1 ? self.buttonVerticalSpacer : 0);
+            
+            [button setFrame:(CGRect){ { x, y }, buttonSize }];
+                
+            lastY = y;
+        }];
+    }
     
     // finish sizing content view
-    CGFloat dialogHeight = kTTDialogContentTopInset + self.titleLabel.frame.size.height + kTTDialogContentTitleMessageSpacer + self.messageScrollView.frame.size.height + kTTDialogContentMessageButtonSpacer + totalButtonHeight + kTTDialogContentBottomInset;
-    [self.containerView setFrame:(CGRect){ { kTTDialogLeftInset, MAX(kTTDialogMinVerticalInset, self.frame.size.height/2 - dialogHeight/2) }, { self.bounds.size.width - 2*kTTDialogLeftInset, dialogHeight } }];
+    CGFloat dialogHeight = self.contentInsets.top + self.titleLabel.frame.size.height + self.contentTitleMessageSpacer + self.messageScrollView.frame.size.height + self.contentInsets.bottom + self.buttonInsets.top + totalButtonHeight + self.buttonInsets.bottom;
+    [self.containerView setFrame:(CGRect){ { self.containerLeftInset, MAX(self.containerMinVerticalInset, self.frame.size.height/2 - dialogHeight/2) }, { self.bounds.size.width - self.containerLeftInset - self.containerRightInset, dialogHeight } }];
     
 }
 
@@ -339,13 +469,13 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
     UIImageView *backgroundView = [[UIImageView alloc] init];
     [backgroundView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.7]];
     [self addSubview:backgroundView];
-    _dialogBackgroundView = backgroundView;
+    _backgroundView = backgroundView;
     
     UIImageView *dialogContainerView = [[UIImageView alloc] init];
     [dialogContainerView setBackgroundColor:[UIColor whiteColor]];
     [dialogContainerView setUserInteractionEnabled:YES];
     [self addSubview:dialogContainerView];
-    _dialogContainerView = dialogContainerView;
+    _containerView = dialogContainerView;
     
     UILabel *titleLabel = [[UILabel alloc] init];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
@@ -377,12 +507,27 @@ static CGFloat const kTTDialogContentButtonHeight = 42.0f;
 
 - (void)cancelButtonAction:(id)sender
 {
+    if(self.buttonActionHandler) {
+        self.buttonActionHandler(self.cancelButtonIndex);
+    } else {
+        if([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
+            [self.delegate alertView:self clickedButtonAtIndex:self.cancelButtonIndex];
+        }
+    }
     [self dismissWithClickedButtonIndex:self.cancelButtonIndex animated:YES];
 }
 
 - (void)otherButtonAction:(id)sender
 {
-    [self dismissWithClickedButtonIndex:[self.buttons indexOfObject:sender] + self.firstOtherButtonIndex animated:YES];
+    NSInteger index = [self.buttons indexOfObject:sender];
+    if(self.buttonActionHandler) {
+        self.buttonActionHandler(index);
+    } else {
+        if([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
+            [self.delegate alertView:self clickedButtonAtIndex:index];
+        }
+    }
+    [self dismissWithClickedButtonIndex:index animated:YES];
 }
 
 @end
