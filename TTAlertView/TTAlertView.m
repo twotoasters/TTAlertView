@@ -507,7 +507,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)cancelButtonAction:(id)sender
 {
-    if(self.buttonActionHandler != nil) {
+    if(self.buttonActionHandler) {
         self.buttonActionHandler(self.cancelButtonIndex);
     } else {
         if([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
@@ -520,7 +520,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 - (void)otherButtonAction:(id)sender
 {
     NSInteger index = [self.buttons indexOfObject:sender];
-    if(self.buttonActionHandler != nil) {
+    if(self.buttonActionHandler) {
         self.buttonActionHandler(index);
     } else {
         if([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
