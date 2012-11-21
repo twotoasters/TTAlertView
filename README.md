@@ -13,7 +13,7 @@ Using TTAlertView is simple. TTAlertView uses the familiar `initWithTitle:​mes
 
 Lets see some code:
 
-```objective-c A Simple TTAlertView Example
+```objective-c
 
 - (void)simpleAlert
 {
