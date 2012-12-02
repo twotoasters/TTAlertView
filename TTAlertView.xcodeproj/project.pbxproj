@@ -31,7 +31,6 @@
 		1394CD0716286B1B003D93D4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1394CCFE16286B1B003D93D4 /* Default@2x.png */; };
 		1394CD0816286B1B003D93D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1394CD0016286B1B003D93D4 /* InfoPlist.strings */; };
 		1394CD0916286B1B003D93D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1394CD0216286B1B003D93D4 /* main.m */; };
-		1394CD0A16286B1B003D93D4 /* TTAlertView-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1394CD0316286B1B003D93D4 /* TTAlertView-Info.plist */; };
 		1394CD0D16286B28003D93D4 /* TTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1394CD0C16286B28003D93D4 /* TTAppDelegate.m */; };
 		1394CD2A1628A2CA003D93D4 /* TTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1394CD291628A2CA003D93D4 /* TTAlertView.m */; };
 /* End PBXBuildFile section */
@@ -239,7 +238,6 @@
 				1394CD0616286B1B003D93D4 /* Default.png in Resources */,
 				1394CD0716286B1B003D93D4 /* Default@2x.png in Resources */,
 				1394CD0816286B1B003D93D4 /* InfoPlist.strings in Resources */,
-				1394CD0A16286B1B003D93D4 /* TTAlertView-Info.plist in Resources */,
 				13864A24162DFF340035A10D /* alert.bg.png in Resources */,
 				13864A25162DFF340035A10D /* alert.bg@2x.png in Resources */,
 				13864A26162DFF340035A10D /* large.button.green.off.png in Resources */,
