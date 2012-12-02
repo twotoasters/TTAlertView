@@ -31,7 +31,7 @@ Lets see some code:
 
 ![A real simple TTAlertView](http://f.cl.ly/items/0s101b290u2D463J3D0n/Screen%20Shot%202012-10-19%20at%2011.23.32%20AM.png)
 
-This is just a simple example of TTAlertView's use. You can read more about using TTAlertView at [ToastMo's blog post on TTAlertView.](#http://toastmo.com/blog/2012/11/21/introducing-ttalertview/)
+This is just a simple example of TTAlertView's use. You can read more about using TTAlertView at [ToastMo's blog post on TTAlertView.](http://toastmo.com/blog/2012/11/21/introducing-ttalertview/)
 
 ## License
 
