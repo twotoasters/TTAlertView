@@ -29,10 +29,13 @@ typedef void (^TTAlertViewActionHandler)(NSInteger index);
 
 @property (nonatomic, copy) TTAlertViewActionHandler buttonActionHandler;
 
-@property (nonatomic, readonly) UIImageView *backgroundView UI_APPEARANCE_SELECTOR; // by default, the darkened background displayed behind the alert
-@property (nonatomic, readonly) UIImageView *containerView UI_APPEARANCE_SELECTOR; // the background of the alert view
+@property (nonatomic, readonly) UIImageView *backgroundView; // by default, the darkened background displayed behind the alert
+@property (nonatomic, readonly) UIImageView *containerView; // the background of the alert view
 @property (nonatomic, readonly) UILabel *titleLabel;
 @property (nonatomic, readonly) UILabel *messageLabel;
+
+@property (nonatomic, strong) UIImage *backgroundImage UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIImage *containerImage UI_APPEARANCE_SELECTOR;
 
 /**
  * Insets for the content area and the button area sized inside of the container view
