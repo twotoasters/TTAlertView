@@ -75,7 +75,7 @@ typedef void (^TTAlertViewActionHandler)(NSInteger index);
 /**
  * Set the background image for the button at a given index, for a specific size
  * This is intended to be used with resizable images, and allows the button to 
- * have a custom size.  
+ * have a custom size.
  */
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index UI_APPEARANCE_SELECTOR;
 
