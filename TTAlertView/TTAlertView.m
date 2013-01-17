@@ -260,6 +260,50 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     }
 }
 
+- (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state
+{
+    for (UIButton *button in self.buttons) {
+        [button setTitleColor:titleColor forState:state];
+    }
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setButtonTitleFont:(UIFont *)titleFont
+{
+    for (UIButton *button in self.buttons) {
+        [button.titleLabel setFont:titleFont];
+    }
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setButtonTitleShadowColor:(UIColor *)shadowColor forState:(UIControlState)state
+{
+    for (UIButton *button in self.buttons) {
+        [button setTitleShadowColor:shadowColor forState:state];
+    }
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setButtonTitleShadowOffset:(CGSize)shadowOffset
+{
+    for (UIButton *button in self.buttons) {
+        [button.titleLabel setShadowOffset:shadowOffset];
+    }
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
 #pragma mark - Buttons
 
 - (void)addButtonWithTitle:(NSString *)title

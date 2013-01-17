@@ -88,6 +88,11 @@ typedef void (^TTAlertViewActionHandler)(NSInteger index);
  */
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index UI_APPEARANCE_SELECTOR;
 
+- (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (void)setButtonTitleShadowColor:(UIColor *)shadowColor forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+- (void)setButtonTitleFont:(UIFont *)titleFont UI_APPEARANCE_SELECTOR;
+- (void)setButtonTitleShadowOffset:(CGSize)shadowOffset UI_APPEARANCE_SELECTOR;
+
 @end
 
 #pragma mark - TTAlertViewDelegate
