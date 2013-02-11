@@ -222,6 +222,10 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state atIndex:(NSUInteger)index
 {
+    if (index >= [self.buttons count]) {
+        return;
+    }
+    
     [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundImage:image forState:state];
     [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundColor:[UIColor clearColor]];
     
@@ -236,6 +240,10 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
 {
+    if (index >= [self.buttons count]) {
+        return;
+    }
+    
     self.usingCustomButtonSizes = YES;
     [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
     
@@ -249,6 +257,10 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
 {
+    if (index >= [self.buttons count]) {
+        return;
+    }
+    
     self.usingCustomButtonSizes = YES;
     [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
     
