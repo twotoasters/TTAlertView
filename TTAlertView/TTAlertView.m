@@ -114,8 +114,6 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
                            nil];    
     [animation setKeyTimes:frameTimes];
     
-    animation.fillMode = kCAFillModeForwards;
-    animation.removedOnCompletion = NO;
     animation.duration = .4;
     
     return animation;
@@ -129,6 +127,8 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     
     [self setAlpha:0.0f];
     [window addSubview:self];
+    
+    NSLog(@"%@", window);
     
     if([self.delegate respondsToSelector:@selector(willPresentAlertView:)]) {
         [self.delegate willPresentAlertView:self];
@@ -144,7 +144,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
                              [self.delegate didPresentAlertView:self];
                          }
                      }];
-    [self.containerView.layer addAnimation:[self popUpAnimation] forKey:@"popup"];
+    [self.containerView.layer addAnimation:[self popUpAnimation] forKey:@"ttalertview_popup"];
 }
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)index animated:(BOOL)animated
