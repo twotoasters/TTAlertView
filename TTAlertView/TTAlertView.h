@@ -80,6 +80,11 @@ typedef void (^TTAlertViewActionHandler)(NSInteger index);
  */
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index;
 
+/**
+ *
+ */
+- (UIButton *)buttonAtIndex:(NSUInteger)index;
+
 @end
 
 #pragma mark - 
