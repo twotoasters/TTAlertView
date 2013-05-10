@@ -269,6 +269,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     [otherButton addTarget:self action:@selector(otherButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [otherButton setTitle:title forState:UIControlStateNormal];
     [self.containerView addSubview:otherButton];
+    if (self.firstOtherButtonIndex < 0) _firstOtherButtonIndex = MAX(_cancelButtonIndex, 0) + 1;
     [self.buttons insertObject:otherButton atIndex:([self.buttons count] - 1) + self.firstOtherButtonIndex];
     
     if(self.isVisible) {
