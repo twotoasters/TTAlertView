@@ -292,12 +292,14 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     
     self.buttons = [NSMutableArray array];
     
-    UIButton *cancelButton = [[UIButton alloc] init];
-    [cancelButton setBackgroundColor:[UIColor blackColor]];
-    [cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [cancelButton setTitle:self.cancelButtonTitle forState:UIControlStateNormal];
-    [self.containerView addSubview:cancelButton];
-    [self.buttons insertObject:cancelButton atIndex:_cancelButtonIndex];
+    if (self.cancelButtonTitle) { 
+        UIButton *cancelButton = [[UIButton alloc] init];
+        [cancelButton setBackgroundColor:[UIColor blackColor]];
+        [cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton setTitle:self.cancelButtonTitle forState:UIControlStateNormal];
+        [self.containerView addSubview:cancelButton];
+        [self.buttons insertObject:cancelButton atIndex:_cancelButtonIndex];
+    }
     
     [self.otherButtonTitles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [self addButtonWithTitle:(NSString *)obj];
