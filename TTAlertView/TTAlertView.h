@@ -82,7 +82,7 @@ typedef void (^TTAlertViewActionHandler)(NSInteger index);
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index;
 
 /**
- *
+ * Retrieve the button at the given index to allow for further customization. Changes to the button's frame may result in unexpected layout behavior.
  */
 - (UIButton *)buttonAtIndex:(NSUInteger)index;
 

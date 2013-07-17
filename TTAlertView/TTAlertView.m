@@ -208,6 +208,15 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     }
 }
 
+- (UIButton *)buttonAtIndex:(NSUInteger)index
+{
+	UIButton *button = nil;
+	if (index < [self.buttons count]) {
+		button = [self.buttons objectAtIndex:index];
+	}
+	return button;
+}
+
 #pragma mark - TTAlertView customization methods
 
 - (void)setBackgroundImage:(UIImage *)image
@@ -258,15 +267,6 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     if(self.isVisible) {
         [self setNeedsLayout];
     }
-}
-
-- (UIButton *)buttonAtIndex:(NSUInteger)index
-{
-	UIButton *button = nil;
-	if (index < [self.buttons count]) {
-		button = [self.buttons objectAtIndex:index];
-	}
-	return button;
 }
 
 #pragma mark - Buttons
