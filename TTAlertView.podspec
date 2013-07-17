@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/twotoasters/TTAlertView"
   s.license      = 'MIT'
   s.author       = 'Two Toasters'
-  s.source       = { :git => "https://github.com/aaronbrethorst/TTAlertView.git", :tag => '0.0.1' }
+  s.source       = { :git => "https://github.com/twotoasters/TTAlertView.git", :tag => '0.0.1' }
   s.platform     = :ios
   s.source_files = 'TTAlertView/*.{h,m}'
   s.framework  = 'QuartzCore'
