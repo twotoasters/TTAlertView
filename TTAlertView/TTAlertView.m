@@ -114,8 +114,6 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
                            nil];    
     [animation setKeyTimes:frameTimes];
     
-    animation.fillMode = kCAFillModeForwards;
-    animation.removedOnCompletion = NO;
     animation.duration = .4;
     
     return animation;
@@ -129,6 +127,8 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     
     [self setAlpha:0.0f];
     [window addSubview:self];
+    
+    NSLog(@"%@", window);
     
     if([self.delegate respondsToSelector:@selector(willPresentAlertView:)]) {
         [self.delegate willPresentAlertView:self];
@@ -144,7 +144,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
                              [self.delegate didPresentAlertView:self];
                          }
                      }];
-    [self.containerView.layer addAnimation:[self popUpAnimation] forKey:@"popup"];
+    [self.containerView.layer addAnimation:[self popUpAnimation] forKey:@"ttalertview_popup"];
 }
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)index animated:(BOOL)animated
@@ -215,13 +215,17 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     [self.backgroundView setImage:image];
 }
 
-- (void)setAlertContainerImage:(UIImage *)image
+- (void)setContainerImage:(UIImage *)image
 {
     [self.containerView setImage:image];
 }
 
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state atIndex:(NSUInteger)index
 {
+    if (index >= [self.buttons count]) {
+        return;
+    }
+    
     [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundImage:image forState:state];
     [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundColor:[UIColor clearColor]];
     
@@ -236,6 +240,10 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)setButtonBackgroundImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
 {
+    if (index >= [self.buttons count]) {
+        return;
+    }
+    
     self.usingCustomButtonSizes = YES;
     [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
     
@@ -249,11 +257,59 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state withSize:(CGSize)size atIndex:(NSUInteger)index
 {
+    if (index >= [self.buttons count]) {
+        return;
+    }
+    
     self.usingCustomButtonSizes = YES;
     [self.buttonSizeStrings setObject:NSStringFromCGSize(size) forKey:[NSNumber numberWithInteger:index]];
     
     [(UIButton *)[self.buttons objectAtIndex:index] setImage:image forState:state];
     [(UIButton *)[self.buttons objectAtIndex:index] setBackgroundColor:[UIColor clearColor]];
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state
+{
+    for (UIButton *button in self.buttons) {
+        [button setTitleColor:titleColor forState:state];
+    }
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setButtonTitleFont:(UIFont *)titleFont
+{
+    for (UIButton *button in self.buttons) {
+        [button.titleLabel setFont:titleFont];
+    }
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setButtonTitleShadowColor:(UIColor *)shadowColor forState:(UIControlState)state
+{
+    for (UIButton *button in self.buttons) {
+        [button setTitleShadowColor:shadowColor forState:state];
+    }
+    
+    if(self.isVisible) {
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setButtonTitleShadowOffset:(CGSize)shadowOffset
+{
+    for (UIButton *button in self.buttons) {
+        [button.titleLabel setShadowOffset:shadowOffset];
+    }
     
     if(self.isVisible) {
         [self setNeedsLayout];
