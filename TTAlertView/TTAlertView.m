@@ -224,7 +224,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     [self.backgroundView setImage:image];
 }
 
-- (void)setAlertContainerImage:(UIImage *)image
+- (void)setContainerImage:(UIImage *)image
 {
     [self.containerView setImage:image];
 }
