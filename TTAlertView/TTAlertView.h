@@ -47,6 +47,7 @@ typedef void (^TTAlertViewActionHandler)(NSInteger index);
 @property (nonatomic, assign) CGFloat containerLeftInset;
 @property (nonatomic, assign) CGFloat containerRightInset;
 @property (nonatomic, assign) CGFloat containerMinVerticalInset;
+@property (nonatomic, assign) CGFloat containerVerticalOffset;
 
 @property (nonatomic, assign) CGFloat contentTitleMessageSpacer; // space between the title label and the message label in the default layout
 @property (nonatomic, assign) CGFloat buttonVerticalSpacerFirst; // the vertical distance between the first and second button in the #buttons > 2 vertical layout
