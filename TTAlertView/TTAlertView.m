@@ -139,7 +139,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
                          [self setAlpha:1.0f];
                      }
                      completion:^(BOOL finished) {
-                         _visible = YES;
+                         self->_visible = YES;
                          if([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
                              [self.delegate didPresentAlertView:self];
                          }
@@ -159,7 +159,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
                      }
                      completion:^(BOOL finished) {
                          [self removeFromSuperview];
-                         _visible = NO;
+                         self->_visible = NO;
                          if([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)]) {
                              [self.delegate alertView:self didDismissWithButtonIndex:index];
                          }
@@ -269,7 +269,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     [otherButton addTarget:self action:@selector(otherButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [otherButton setTitle:title forState:UIControlStateNormal];
     [self.containerView addSubview:otherButton];
-    [self.buttons insertObject:otherButton atIndex:([self.buttons count] - 1) + self.firstOtherButtonIndex];
+    [self.buttons addObject:otherButton];
     
     if(self.isVisible) {
         [self setNeedsLayout];
@@ -278,31 +278,28 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
 - (void)setupButtons
 {
+    self.buttons = [NSMutableArray array];
+    _cancelButtonIndex = -1;
+    _firstOtherButtonIndex = -1;
+
     if (self.cancelButtonTitle != nil) {
         _cancelButtonIndex = 0;
-    } else {
-        _cancelButtonIndex = -1;
+
+        UIButton *cancelButton = [[UIButton alloc] init];
+        [cancelButton setBackgroundColor:[UIColor blackColor]];
+        [cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton setTitle:self.cancelButtonTitle forState:UIControlStateNormal];
+        [self.containerView addSubview:cancelButton];
+        [self.buttons addObject:cancelButton];
     }
     
     if ([self.otherButtonTitles count] > 0) {
         _firstOtherButtonIndex = _cancelButtonIndex + 1;
-    } else {
-        _firstOtherButtonIndex = -1;
+
+        for (NSString *otherButtonTitle in self.otherButtonTitles) {
+            [self addButtonWithTitle:otherButtonTitle];
+        }
     }
-    
-    self.buttons = [NSMutableArray array];
-    
-    UIButton *cancelButton = [[UIButton alloc] init];
-    [cancelButton setBackgroundColor:[UIColor blackColor]];
-    [cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [cancelButton setTitle:self.cancelButtonTitle forState:UIControlStateNormal];
-    [self.containerView addSubview:cancelButton];
-    [self.buttons insertObject:cancelButton atIndex:_cancelButtonIndex];
-    
-    [self.otherButtonTitles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [self addButtonWithTitle:(NSString *)obj];
-    }];
-    
 }
 
 #pragma mark - Layout helpers
