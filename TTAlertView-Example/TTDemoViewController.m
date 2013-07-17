@@ -181,6 +181,15 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     [scrollView addSubview:demoThreeButtonsCustomSizedTest];
     
     y += ySpacing + buttonHeight;
+
+    UIButton *verticalOffsetTest = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [verticalOffsetTest setTitle:@"Vertical Offset" forState:UIControlStateNormal];
+    [verticalOffsetTest addTarget:self action:@selector(demoVerticalOffsetButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [verticalOffsetTest setFrame:(CGRect){ buttonWidth, y, buttonWidth, buttonHeight }];
+    [[verticalOffsetTest titleLabel] setLineBreakMode:NSLineBreakByWordWrapping];
+    [scrollView addSubview:verticalOffsetTest];
+
+    y += ySpacing + buttonHeight;
     
     [scrollView setContentSize:(CGSize){self.view.bounds.size.width, y}];
     [self.view addSubview:scrollView];
@@ -415,6 +424,15 @@ static NSString * const loremIpsum = @"Lorem Ipsum is simply dummy text of the p
     [alertView setButtonBackgroundImage:greenButtonImageOff forState:UIControlStateNormal withSize:CGSizeMake(100, 44) atIndex:2];
     [alertView setButtonBackgroundImage:greenButtonImageOn forState:UIControlStateHighlighted withSize:CGSizeMake(100, 44) atIndex:2];
     
+    [alertView show];
+}
+
+- (void)demoVerticalOffsetButtonAction
+{
+    TTAlertView *alertView = [[TTAlertView alloc] initWithTitle:@"Vertical Offset" message:@"-80 point offset" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+    [self styleCustomAlertView:alertView];
+    [self addButtonsWithBackgroundImagesToAlertView:alertView];
+    alertView.containerVerticalOffset = -80.0f;
     [alertView show];
 }
 
