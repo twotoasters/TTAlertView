@@ -457,7 +457,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     
     // finish sizing content view
     CGFloat dialogHeight = self.contentInsets.top + self.titleLabel.frame.size.height + self.contentTitleMessageSpacer + self.messageScrollView.frame.size.height + self.contentInsets.bottom + self.buttonInsets.top + totalButtonHeight + self.buttonInsets.bottom;
-    [self.containerView setFrame:(CGRect){ { self.containerLeftInset, MAX(self.containerMinVerticalInset, self.frame.size.height/2 - dialogHeight/2) }, { self.bounds.size.width - self.containerLeftInset - self.containerRightInset, dialogHeight } }];
+    [self.containerView setFrame:(CGRect){ { self.containerLeftInset, MAX(self.containerMinVerticalInset, self.frame.size.height/2 - dialogHeight/2) + self.containerVerticalOffset }, { self.bounds.size.width - self.containerLeftInset - self.containerRightInset, dialogHeight } }];
     
 }
 
