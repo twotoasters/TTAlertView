@@ -133,12 +133,17 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     if([self.delegate respondsToSelector:@selector(willPresentAlertView:)]) {
         [self.delegate willPresentAlertView:self];
     }
-    
+
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+
     [UIView animateWithDuration:0.25f
                      animations:^{
                          [self setAlpha:1.0f];
                      }
                      completion:^(BOOL finished) {
+                         self.layer.shouldRasterize = NO;
+                         
                          self->_visible = YES;
                          if([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
                              [self.delegate didPresentAlertView:self];
@@ -152,12 +157,17 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     if([self.delegate respondsToSelector:@selector(alertView:willDismissWithButtonIndex:)]) {
         [self.delegate alertView:self willDismissWithButtonIndex:index];
     }
-    
+
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+
     [UIView animateWithDuration:0.25f
                      animations:^{
                          [self setAlpha:0.0];
                      }
                      completion:^(BOOL finished) {
+                         self.layer.shouldRasterize = NO;
+
                          [self removeFromSuperview];
                          self->_visible = NO;
                          if([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)]) {
