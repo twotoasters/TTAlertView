@@ -404,9 +404,9 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     messageLabelFrame.origin = CGPointZero;
     messageLabelFrame.size.width = contentWidth;
     self.messageLabel.frame = messageLabelFrame;
-    CGSize messageTextSize = [self.messageLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    messageLabelFrame.size.height = messageTextSize.height;
-    self.messageLabel.frame = messageLabelFrame;
+    [self.messageLabel sizeToFit];
+
+    CGSize messageTextSize = self.messageLabel.frame.size;
 
     CGFloat maxMessageHeight = CGRectGetHeight(self.bounds) - self.containerMinVerticalInset - self.contentInsets.top - titleTextSize.height - self.contentTitleMessageSpacer - self.contentInsets.bottom - self.buttonInsets.top - totalButtonHeight - self.buttonInsets.bottom  - self.containerMinVerticalInset;
     self.messageScrollView.frame = CGRectMake(self.contentInsets.left,
