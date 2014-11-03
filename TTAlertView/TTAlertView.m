@@ -401,10 +401,13 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
     // max message size is (height of screen) - (min dialog vertical inset) - (content top inset) - (title height) - (content title-message spacer) - (content bottom inset) - (button top inset) - (button height) - (button bottom inset) - (min dialog vertical inset)
     CGRect messageLabelFrame = self.messageLabel.frame;
-    messageLabelFrame.origin = CGPointZero;
     messageLabelFrame.size.width = contentWidth;
     self.messageLabel.frame = messageLabelFrame;
     [self.messageLabel sizeToFit];
+    messageLabelFrame = self.messageLabel.frame;
+    messageLabelFrame.origin = CGPointZero;
+    messageLabelFrame.size.width = contentWidth;
+    self.messageLabel.frame = messageLabelFrame;
 
     CGSize messageTextSize = self.messageLabel.frame.size;
 
