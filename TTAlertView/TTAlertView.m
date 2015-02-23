@@ -358,7 +358,13 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     titleLabelFrame.origin.y = self.contentInsets.top;
     titleLabelFrame.size.width = contentWidth;
     self.titleLabel.frame = titleLabelFrame;
-    CGSize titleTextSize = [self.titleLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+
+    CGRect rect = [_titleLabel.text boundingRectWithSize:CGSizeMake(contentWidth, CGFLOAT_MAX)
+                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                           attributes:@{NSFontAttributeName: _titleLabel.font}
+                                              context:nil];
+    CGSize titleTextSize = rect.size;
+
     titleLabelFrame.size.height = titleTextSize.height;
     self.titleLabel.frame = titleLabelFrame;
 
@@ -513,6 +519,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     [titleLabel setTextColor:[UIColor blackColor]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setNumberOfLines:0];
     [titleLabel setText:self.title];
     [self.containerView addSubview:titleLabel];
     _titleLabel = titleLabel;
