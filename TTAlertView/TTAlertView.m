@@ -365,7 +365,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
                                               context:nil];
     CGSize titleTextSize = rect.size;
 
-    titleLabelFrame.size.height = titleTextSize.height;
+    titleLabelFrame.size.height = floorf(titleTextSize.height);
     self.titleLabel.frame = titleLabelFrame;
 
     // buttons (layed out from bottom up)
